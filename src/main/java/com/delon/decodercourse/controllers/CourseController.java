@@ -45,6 +45,7 @@ public class CourseController {
     public ResponseEntity<CourseEntity> updateCourse(@PathVariable UUID courseId, @RequestBody @Validated CourseDto courseDto) {
         return courseService.findById(courseId).map(course -> {
             var courseEntity = CourseEntity.updateFromDto(courseDto);
+            courseEntity.setCreatedDate(course.getCreatedDate());
             courseService.save(courseEntity);
             return ResponseEntity.status(HttpStatus.OK).body(courseEntity);
         }).orElseGet(() -> ResponseEntity.notFound().build());
