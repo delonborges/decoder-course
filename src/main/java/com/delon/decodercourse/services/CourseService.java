@@ -1,3 +1,8 @@
 package com.delon.decodercourse.services;
 
-public interface CourseService {}
+import com.delon.decodercourse.entities.CourseEntity;
+
+public interface CourseService {
+
+    void delete(CourseEntity courseEntity);
+}

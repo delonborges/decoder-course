@@ -41,8 +41,8 @@ public class ModuleEntity implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CourseEntity course;
 
+    @Fetch(FetchMode.SUBSELECT)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
     private Set<LessonEntity> lessons;
 }

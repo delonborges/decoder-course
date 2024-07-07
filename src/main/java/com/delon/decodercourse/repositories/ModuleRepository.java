@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface ModuleRepository extends JpaRepository<ModuleEntity, UUID> {
 
     @Query(value = """
-                   select * from tb_module
+                   select * from tb_modules
                    where course_course_id = :courseId
                    """, nativeQuery = true)
     List<ModuleEntity> findAllModulesByCourseId(@Param("courseId") UUID courseId);

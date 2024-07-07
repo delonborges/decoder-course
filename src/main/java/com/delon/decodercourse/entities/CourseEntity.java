@@ -57,8 +57,8 @@ public class CourseEntity implements Serializable {
     @Column(nullable = false)
     private UUID userInstructor;
 
+    @Fetch(FetchMode.SUBSELECT)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
     private Set<ModuleEntity> modules;
 }
