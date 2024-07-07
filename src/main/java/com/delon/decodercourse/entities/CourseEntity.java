@@ -1,5 +1,6 @@
 package com.delon.decodercourse.entities;
 
+import com.delon.decodercourse.dtos.CourseDto;
 import com.delon.decodercourse.enums.CourseLevel;
 import com.delon.decodercourse.enums.CourseStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,10 +10,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Set;
 import java.util.UUID;
 
@@ -61,4 +64,24 @@ public class CourseEntity implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private Set<ModuleEntity> modules;
+
+    public static CourseEntity createFromDto(CourseDto courseDto) {
+        var courseEntity = new CourseEntity();
+        BeanUtils.copyProperties(courseDto, courseEntity);
+        setCreateAndUpdateDateTimes(courseEntity);
+        return courseEntity;
+    }
+
+    public static CourseEntity updateFromDto(CourseDto courseDto) {
+        var courseEntity = new CourseEntity();
+        BeanUtils.copyProperties(courseDto, courseEntity);
+        courseEntity.setUpdatedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        return courseEntity;
+    }
+
+    private static void setCreateAndUpdateDateTimes(CourseEntity courseEntity) {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC"));
+        courseEntity.setCreatedDate(now);
+        courseEntity.setUpdatedDate(now);
+    }
 }

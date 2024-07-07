@@ -8,7 +8,9 @@ import com.delon.decodercourse.services.CourseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -31,5 +33,20 @@ public class CourseServiceImpl implements CourseService {
             moduleRepository.deleteAll(modules);
         });
         courseRepository.delete(courseEntity);
+    }
+
+    @Override
+    public void save(CourseEntity courseEntity) {
+        courseRepository.save(courseEntity);
+    }
+
+    @Override
+    public Optional<CourseEntity> findById(UUID courseId) {
+        return courseRepository.findById(courseId);
+    }
+
+    @Override
+    public List<CourseEntity> findAll() {
+        return courseRepository.findAll();
     }
 }
