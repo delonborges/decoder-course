@@ -1,5 +1,6 @@
 package com.delon.decodercourse.entities;
 
+import com.delon.decodercourse.dtos.ModuleDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,10 +8,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,6 +40,10 @@ public class ModuleEntity implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdDate;
 
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime updatedDate;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private CourseEntity course;
@@ -45,4 +52,24 @@ public class ModuleEntity implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
     private Set<LessonEntity> lessons;
+
+    public static ModuleEntity createFromDto(ModuleDto moduleDto) {
+        var moduleEntity = new ModuleEntity();
+        BeanUtils.copyProperties(moduleDto, moduleEntity);
+        setCreateAndUpdateDateTimes(moduleEntity);
+        return moduleEntity;
+    }
+
+    public static ModuleEntity updateFromDto(ModuleDto moduleDto) {
+        var moduleEntity = new ModuleEntity();
+        BeanUtils.copyProperties(moduleDto, moduleEntity);
+        moduleEntity.setUpdatedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        return moduleEntity;
+    }
+
+    private static void setCreateAndUpdateDateTimes(ModuleEntity moduleEntity) {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC"));
+        moduleEntity.setCreatedDate(now);
+        moduleEntity.setUpdatedDate(now);
+    }
 }
