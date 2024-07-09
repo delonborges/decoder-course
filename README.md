@@ -14,10 +14,9 @@
 </p>
 
 <p align=center>
-  <a href="https://delon.com"> <img alt="Authentication" src=https://img.shields.io/badge/course-blue?style=flat-square&label=Decoder%20Project
-&https://delon.com></a>
+  <a href="https://github.com/delonborges/decoder-course/actions"> <img alt="qodana" src="https://img.shields.io/github/actions/workflow/status/delonborges/decoder-course/.github%2Fworkflows%2Fcode_quality.yml?style=flat-square&logo=githubactions&logoColor=white&label=qodana"></a>
+  <a href="https://delon.com"> <img alt="Course" src=https://img.shields.io/badge/course-blue?style=flat-square&label=decoder%20project></a>
 </p>
-
 ___
 
 <h3 id="technologies">✨ Technologies</h3>
