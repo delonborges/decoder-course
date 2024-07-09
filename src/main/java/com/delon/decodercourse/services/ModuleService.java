@@ -12,7 +12,9 @@ public interface ModuleService {
 
     void save(ModuleEntity moduleEntity);
 
-    Optional<ModuleEntity> findModuleByCourseId(UUID moduleId, UUID courseId);
+    Optional<ModuleEntity> findModuleByIdAndCourseId(UUID moduleId, UUID courseId);
 
     List<ModuleEntity> findAllModulesByCourseId(UUID courseId);
+
+    Optional<ModuleEntity> findById(UUID moduleId);
 }

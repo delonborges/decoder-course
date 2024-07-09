@@ -1,14 +1,17 @@
 package com.delon.decodercourse.entities;
 
+import com.delon.decodercourse.dtos.LessonDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 @Data
@@ -44,4 +47,24 @@ public class LessonEntity implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ModuleEntity module;
+
+    public static LessonEntity createFromDto(LessonDto lessonDto) {
+        var lessonEntity = new LessonEntity();
+        BeanUtils.copyProperties(lessonDto, lessonEntity);
+        setCreateAndUpdateDateTimes(lessonEntity);
+        return lessonEntity;
+    }
+
+    public static LessonEntity updateFromDto(LessonDto lessonDto) {
+        var lessonEntity = new LessonEntity();
+        BeanUtils.copyProperties(lessonDto, lessonEntity);
+        lessonEntity.setUpdatedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        return lessonEntity;
+    }
+
+    private static void setCreateAndUpdateDateTimes(LessonEntity lessonEntity) {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC"));
+        lessonEntity.setCreatedDate(now);
+        lessonEntity.setUpdatedDate(now);
+    }
 }

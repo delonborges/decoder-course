@@ -36,7 +36,7 @@ public class ModuleController {
     @GetMapping("/modules/{moduleId}")
     public ResponseEntity<Optional<ModuleEntity>> getModuleByCourseIdAndId(@PathVariable UUID courseId, @PathVariable UUID moduleId) {
         return courseService.findById(courseId)
-                            .map(courseEntity -> ResponseEntity.status(HttpStatus.OK).body(moduleService.findModuleByCourseId(moduleId, courseId)))
+                            .map(courseEntity -> ResponseEntity.status(HttpStatus.OK).body(moduleService.findModuleByIdAndCourseId(moduleId, courseId)))
                             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -52,7 +52,7 @@ public class ModuleController {
 
     @PutMapping("/modules/{moduleId}")
     public ResponseEntity<ModuleEntity> updateModule(@PathVariable UUID courseId, @PathVariable UUID moduleId, @RequestBody @Validated ModuleDto moduleDto) {
-        return moduleService.findModuleByCourseId(moduleId, courseId).map(module -> {
+        return moduleService.findModuleByIdAndCourseId(moduleId, courseId).map(module -> {
             var moduleEntity = ModuleEntity.updateFromDto(moduleDto);
             moduleEntity.setCreatedDate(module.getCreatedDate());
             moduleEntity.setCourse(module.getCourse());
@@ -63,7 +63,7 @@ public class ModuleController {
 
     @DeleteMapping("/modules/{moduleId}")
     public ResponseEntity<Object> deleteModule(@PathVariable UUID courseId, @PathVariable UUID moduleId) {
-        return moduleService.findModuleByCourseId(moduleId, courseId).map(module -> {
+        return moduleService.findModuleByIdAndCourseId(moduleId, courseId).map(module -> {
             moduleService.delete(module);
             return ResponseEntity.noContent().build();
         }).orElseGet(() -> ResponseEntity.notFound().build());
