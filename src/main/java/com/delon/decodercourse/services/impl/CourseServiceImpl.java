@@ -5,10 +5,12 @@ import com.delon.decodercourse.repositories.CourseRepository;
 import com.delon.decodercourse.repositories.LessonRepository;
 import com.delon.decodercourse.repositories.ModuleRepository;
 import com.delon.decodercourse.services.CourseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -46,7 +48,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseEntity> findAll() {
-        return courseRepository.findAll();
+    public Page<CourseEntity> findAll(Specification<CourseEntity> spec, Pageable pageable) {
+        return courseRepository.findAll(spec, pageable);
     }
 }

@@ -3,12 +3,16 @@ package com.delon.decodercourse.controllers;
 import com.delon.decodercourse.dtos.CourseDto;
 import com.delon.decodercourse.entities.CourseEntity;
 import com.delon.decodercourse.services.CourseService;
+import com.delon.decodercourse.specifications.SpecificationTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,8 +27,9 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseEntity>> getAllCourses() {
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll());
+    public ResponseEntity<Page<CourseEntity>> getAllCourses(SpecificationTemplate.CourseSpec spec,
+                                                            @PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")

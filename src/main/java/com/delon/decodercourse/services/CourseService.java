@@ -1,8 +1,10 @@
 package com.delon.decodercourse.services;
 
 import com.delon.decodercourse.entities.CourseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,5 +16,5 @@ public interface CourseService {
 
     Optional<CourseEntity> findById(UUID courseId);
 
-    List<CourseEntity> findAll();
+    Page<CourseEntity> findAll(Specification<CourseEntity> spec, Pageable pageable);
 }
