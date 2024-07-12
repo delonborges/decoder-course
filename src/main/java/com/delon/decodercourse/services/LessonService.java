@@ -1,8 +1,10 @@
 package com.delon.decodercourse.services;
 
 import com.delon.decodercourse.entities.LessonEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,7 +14,7 @@ public interface LessonService {
 
     Optional<LessonEntity> findLessonByIdAndModuleId(UUID lessonId, UUID moduleId);
 
-    void delete(LessonEntity lesson);
+    Page<LessonEntity> findAllLessonsByModuleId(Specification<LessonEntity> and, Pageable pageable);
 
-    List<LessonEntity> findAllLessonsByModuleId(UUID moduleId);
+    void delete(LessonEntity lesson);
 }

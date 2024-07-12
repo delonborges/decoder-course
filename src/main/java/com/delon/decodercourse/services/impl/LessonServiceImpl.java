@@ -3,9 +3,11 @@ package com.delon.decodercourse.services.impl;
 import com.delon.decodercourse.entities.LessonEntity;
 import com.delon.decodercourse.repositories.LessonRepository;
 import com.delon.decodercourse.services.LessonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,12 +31,12 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public void delete(LessonEntity lesson) {
-        lessonRepository.delete(lesson);
+    public Page<LessonEntity> findAllLessonsByModuleId(Specification<LessonEntity> spec, Pageable pageable) {
+        return lessonRepository.findAll(spec, pageable);
     }
 
     @Override
-    public List<LessonEntity> findAllLessonsByModuleId(UUID moduleId) {
-        return lessonRepository.findAllLessonsByModuleId(moduleId);
+    public void delete(LessonEntity lesson) {
+        lessonRepository.delete(lesson);
     }
 }

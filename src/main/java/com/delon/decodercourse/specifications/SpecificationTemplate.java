@@ -25,6 +25,15 @@ public class SpecificationTemplate {
         });
     }
 
+    public static Specification<LessonEntity> lessonsByModuleId(final UUID moduleId) {
+        return ((root, query, criteriaBuilder) -> {
+            query.distinct(true);
+            Root<ModuleEntity> module = query.from(ModuleEntity.class);
+            Expression<Collection<LessonEntity>> lessons = module.get("lessons");
+            return criteriaBuilder.and(criteriaBuilder.equal(module.get("moduleId"), moduleId), criteriaBuilder.isMember(root, lessons));
+        });
+    }
+
     @And({@Spec(path = "courseLevel", spec = Equal.class),
           @Spec(path = "courseStatus", spec = Equal.class),
           @Spec(path = "name", spec = Like.class)})
