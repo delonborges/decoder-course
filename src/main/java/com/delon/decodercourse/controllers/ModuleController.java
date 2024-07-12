@@ -4,12 +4,16 @@ import com.delon.decodercourse.dtos.ModuleDto;
 import com.delon.decodercourse.entities.ModuleEntity;
 import com.delon.decodercourse.services.CourseService;
 import com.delon.decodercourse.services.ModuleService;
+import com.delon.decodercourse.specifications.SpecificationTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,9 +31,12 @@ public class ModuleController {
     }
 
     @GetMapping("/modules")
-    public ResponseEntity<List<ModuleEntity>> getAllModulesByCourseId(@PathVariable UUID courseId) {
+    public ResponseEntity<Page<ModuleEntity>> getAllModulesByCourseId(@PathVariable UUID courseId,
+                                                                      SpecificationTemplate.ModuleSpec spec,
+                                                                      @PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
         return courseService.findById(courseId)
-                            .map(courseEntity -> ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllModulesByCourseId(courseId)))
+                            .map(courseEntity -> ResponseEntity.status(HttpStatus.OK)
+                                                               .body(moduleService.findAllModulesByCourseId(SpecificationTemplate.modulesByCourseId(courseId).and(spec), pageable)))
                             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
