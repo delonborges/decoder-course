@@ -1,7 +1,6 @@
 package com.delon.decodercourse.entities;
 
 import com.delon.decodercourse.dtos.LessonDto;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -37,11 +36,9 @@ public class LessonEntity implements Serializable {
     private String videoUrl;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdDate;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime updatedDate;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -67,4 +64,5 @@ public class LessonEntity implements Serializable {
         lessonEntity.setCreatedDate(now);
         lessonEntity.setUpdatedDate(now);
     }
+
 }

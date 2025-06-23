@@ -3,7 +3,6 @@ package com.delon.decodercourse.entities;
 import com.delon.decodercourse.dtos.CourseDto;
 import com.delon.decodercourse.enums.CourseLevel;
 import com.delon.decodercourse.enums.CourseStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -42,11 +41,9 @@ public class CourseEntity implements Serializable {
     private String imageUrl;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdDate;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime updatedDate;
 
     @Column(nullable = false)
@@ -84,4 +81,5 @@ public class CourseEntity implements Serializable {
         courseEntity.setCreatedDate(now);
         courseEntity.setUpdatedDate(now);
     }
+
 }
