@@ -12,4 +12,5 @@ public record CourseDto(@NotBlank String name,
                         String imageUrl,
                         @NotNull CourseStatus courseStatus,
                         @NotNull CourseLevel courseLevel,
-                        @NotNull UUID userInstructor) {}
+                        @NotNull UUID userInstructor) {
+}

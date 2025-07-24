@@ -1,9 +1,11 @@
 package com.delon.decodercourse.specifications;
 
 import com.delon.decodercourse.entities.CourseEntity;
+import com.delon.decodercourse.entities.CourseUserEntity;
 import com.delon.decodercourse.entities.LessonEntity;
 import com.delon.decodercourse.entities.ModuleEntity;
 import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -34,14 +36,25 @@ public class SpecificationTemplate {
         });
     }
 
+    public static Specification<CourseEntity> coursesByUserId(final UUID userId) {
+        return ((root, query, criteriaBuilder) -> {
+            query.distinct(true);
+            Join<CourseEntity, CourseUserEntity> join = root.join("courseUsers");
+            return criteriaBuilder.equal(join.get("userId"), userId);
+        });
+    }
+
     @And({@Spec(path = "courseLevel", spec = Equal.class),
           @Spec(path = "courseStatus", spec = Equal.class),
           @Spec(path = "name", spec = Like.class)})
-    public interface CourseSpec extends Specification<CourseEntity> {}
+    public interface CourseSpec extends Specification<CourseEntity> {
+    }
 
     @And(@Spec(path = "title", spec = Like.class))
-    public interface ModuleSpec extends Specification<ModuleEntity> {}
+    public interface ModuleSpec extends Specification<ModuleEntity> {
+    }
 
     @And(@Spec(path = "title", spec = Like.class))
-    public interface LessonSpec extends Specification<LessonEntity> {}
+    public interface LessonSpec extends Specification<LessonEntity> {
+    }
 }

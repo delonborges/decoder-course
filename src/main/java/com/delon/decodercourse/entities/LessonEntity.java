@@ -64,5 +64,4 @@ public class LessonEntity implements Serializable {
         lessonEntity.setCreatedDate(now);
         lessonEntity.setUpdatedDate(now);
     }
-
 }

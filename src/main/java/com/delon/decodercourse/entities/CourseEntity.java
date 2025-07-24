@@ -62,6 +62,10 @@ public class CourseEntity implements Serializable {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private Set<ModuleEntity> modules;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private Set<CourseUserEntity> courseUsers;
+
     public static CourseEntity createFromDto(CourseDto courseDto) {
         var courseEntity = new CourseEntity();
         BeanUtils.copyProperties(courseDto, courseEntity);
@@ -81,5 +85,4 @@ public class CourseEntity implements Serializable {
         courseEntity.setCreatedDate(now);
         courseEntity.setUpdatedDate(now);
     }
-
 }

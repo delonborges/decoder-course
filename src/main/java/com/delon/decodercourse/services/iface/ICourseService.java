@@ -1,4 +1,4 @@
-package com.delon.decodercourse.services;
+package com.delon.decodercourse.services.iface;
 
 import com.delon.decodercourse.entities.CourseEntity;
 import org.springframework.data.domain.Page;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CourseService {
+public interface ICourseService {
 
     void delete(CourseEntity courseEntity);
 

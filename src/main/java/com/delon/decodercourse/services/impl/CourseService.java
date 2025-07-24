@@ -4,7 +4,7 @@ import com.delon.decodercourse.entities.CourseEntity;
 import com.delon.decodercourse.repositories.CourseRepository;
 import com.delon.decodercourse.repositories.LessonRepository;
 import com.delon.decodercourse.repositories.ModuleRepository;
-import com.delon.decodercourse.services.CourseService;
+import com.delon.decodercourse.services.iface.ICourseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,13 +15,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CourseServiceImpl implements CourseService {
+public class CourseService implements ICourseService {
 
     private final CourseRepository courseRepository;
     private final ModuleRepository moduleRepository;
     private final LessonRepository lessonRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, ModuleRepository moduleRepository, LessonRepository lessonRepository) {
+    public CourseService(CourseRepository courseRepository, ModuleRepository moduleRepository, LessonRepository lessonRepository) {
         this.courseRepository = courseRepository;
         this.moduleRepository = moduleRepository;
         this.lessonRepository = lessonRepository;

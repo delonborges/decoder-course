@@ -2,7 +2,7 @@ package com.delon.decodercourse.services.impl;
 
 import com.delon.decodercourse.entities.LessonEntity;
 import com.delon.decodercourse.repositories.LessonRepository;
-import com.delon.decodercourse.services.LessonService;
+import com.delon.decodercourse.services.iface.ILessonService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,11 +12,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class LessonServiceImpl implements LessonService {
+public class LessonService implements ILessonService {
 
     private final LessonRepository lessonRepository;
 
-    public LessonServiceImpl(LessonRepository lessonRepository) {
+    public LessonService(LessonRepository lessonRepository) {
         this.lessonRepository = lessonRepository;
     }
 

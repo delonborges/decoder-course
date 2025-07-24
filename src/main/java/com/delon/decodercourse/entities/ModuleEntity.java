@@ -69,5 +69,4 @@ public class ModuleEntity implements Serializable {
         moduleEntity.setCreatedDate(now);
         moduleEntity.setUpdatedDate(now);
     }
-
 }

@@ -2,8 +2,8 @@ package com.delon.decodercourse.controllers;
 
 import com.delon.decodercourse.dtos.LessonDto;
 import com.delon.decodercourse.entities.LessonEntity;
-import com.delon.decodercourse.services.LessonService;
-import com.delon.decodercourse.services.ModuleService;
+import com.delon.decodercourse.services.iface.ILessonService;
+import com.delon.decodercourse.services.iface.IModuleService;
 import com.delon.decodercourse.specifications.SpecificationTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +22,10 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LessonController {
 
-    private final LessonService lessonService;
-    private final ModuleService moduleService;
+    private final ILessonService lessonService;
+    private final IModuleService moduleService;
 
-    public LessonController(LessonService lessonService, ModuleService moduleService) {
+    public LessonController(ILessonService lessonService, IModuleService moduleService) {
         this.lessonService = lessonService;
         this.moduleService = moduleService;
     }
@@ -36,7 +36,8 @@ public class LessonController {
                                                                       @PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
         return moduleService.findById(moduleId)
                             .map(moduleEntity -> ResponseEntity.status(HttpStatus.OK)
-                                                               .body(lessonService.findAllLessonsByModuleId(SpecificationTemplate.lessonsByModuleId(moduleId).and(spec), pageable)))
+                                                               .body(lessonService.findAllLessonsByModuleId(SpecificationTemplate.lessonsByModuleId(moduleId)
+                                                                                                                                 .and(spec), pageable)))
                             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
